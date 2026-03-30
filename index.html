@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>SMC APEX v17.3.0 | URTRADER TERMINAL</title>
+    <title>SMC APEX v16.8.0 | URTRADER TERMINAL</title>
     <style>
-        /* ... (CSS sama seperti sebelumnya) ... */
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=JetBrains+Mono:wght@400;800&display=swap');
         
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -64,14 +63,6 @@
             animation: none;
             box-shadow: none;
         }
-        .ws-status-dot.fallback { 
-            background: var(--blue); 
-            animation: pulseFallback 1s ease infinite;
-        }
-        @keyframes pulseFallback {
-            0%, 100% { opacity: 1; transform: scale(1); background: var(--blue); }
-            50% { opacity: 0.6; transform: scale(0.9); background: #00aaff; }
-        }
         @keyframes pulseLive {
             0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 8px var(--accent); }
             50% { opacity: 0.6; transform: scale(0.9); box-shadow: 0 0 4px var(--accent); }
@@ -116,7 +107,7 @@
         .hero-meta-row {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 12px;
             width: 100%;
             margin-bottom: 16px;
             font-family: 'JetBrains Mono';
@@ -128,43 +119,30 @@
         
         .adx-status {
             background: rgba(0,0,0,0.6);
-            padding: 4px 10px;
+            padding: 4px 12px;
             border-radius: 20px;
             border: 1px solid var(--gold-dim);
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
-        .adx-bar-container { width: 40px; height: 4px; background: #2a2a2a; border-radius: 4px; overflow: hidden; display: inline-block; }
+        .adx-bar-container { width: 45px; height: 4px; background: #2a2a2a; border-radius: 4px; overflow: hidden; display: inline-block; }
         .adx-bar { height: 100%; width: 0%; background: var(--silver-medium); transition: width 0.3s ease, background 0.3s ease; border-radius: 4px; }
-        .adx-value { font-weight: 800; min-width: 35px; text-align: right; }
+        .adx-value { font-weight: 800; min-width: 38px; text-align: right; }
         .adx-status.strong { border-color: var(--accent); color: var(--accent); background: rgba(0, 255, 170, 0.1); }
         .adx-status.weak { border-color: var(--gold); color: var(--gold); background: rgba(255, 204, 0, 0.1); }
         .adx-status.ranging { border-color: var(--silver-dark); color: var(--silver-dark); }
         
-        .direction-arrow {
-            font-size: 1.8rem;
-            font-weight: 800;
-            transition: all 0.2s ease;
-            min-width: 48px;
-            text-align: center;
-            cursor: default;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            line-height: 1;
-        }
-        
         .ema34-status {
             background: rgba(0,0,0,0.6);
-            padding: 4px 10px;
+            padding: 4px 12px;
             border-radius: 20px;
             border: 1px solid var(--gold-dim);
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
-        .ema34-value { font-weight: 800; min-width: 60px; text-align: right; }
+        .ema34-value { font-weight: 800; min-width: 65px; text-align: right; }
         .ema34-status.bullish { border-color: var(--accent); color: var(--accent); background: rgba(0, 255, 170, 0.1); }
         .ema34-status.bearish { border-color: var(--danger); color: var(--danger); background: rgba(255, 71, 87, 0.1); }
         
@@ -183,7 +161,6 @@
             letter-spacing: 0.5px;
             transition: all 0.2s ease;
             flex: 1;
-            margin-top: 0;
         }
         .decision-text {
             display: inline-flex;
@@ -195,6 +172,14 @@
         }
         #decision-status {
             font-weight: 900;
+        }
+        .direction-arrow {
+            font-size: 1.2rem;
+            font-weight: 800;
+            transition: all 0.2s ease;
+            min-width: 35px;
+            text-align: right;
+            cursor: default;
         }
         
         .rsi-panel {
@@ -282,19 +267,15 @@
         
         @media (max-width: 700px) {
             .hero-meta-row { gap: 8px; }
-            .adx-status, .ema34-status {
-                font-size: 0.55rem;
-                padding: 4px 8px;
-            }
-            .direction-arrow {
-                font-size: 1.4rem;
-                min-width: 38px;
-            }
-            .decision-panel {
+            .adx-status, .ema34-status, .decision-panel {
                 font-size: 0.55rem;
                 padding: 5px 12px;
             }
             .mtf-paragraph-text { font-size: 0.55rem; }
+            .direction-arrow {
+                font-size: 1rem;
+                min-width: 28px;
+            }
         }
         
         #live-price { font-family: 'JetBrains Mono'; font-size: 2.5rem; font-weight: 800; letter-spacing: -2px; color: #fff; line-height: 1; cursor: pointer; transition: color 0.08s linear; word-break: break-word; text-align: left; width: 100%; margin-top: 4px; }
@@ -371,7 +352,7 @@
         .date-module-new { color: var(--silver-bright); }
         .clock-module-new { color: #fff; background: #000; border-color: var(--accent); }
         
-        .syncing { opacity: 0.8; transition: opacity 0.15s; pointer-events: none; }
+        .syncing { opacity: 0.6; transition: opacity 0.2s; pointer-events: none; }
         .syncing * { pointer-events: none; }
         .copied { color: #fff !important; text-shadow: 0 0 8px var(--accent); transition: 0.1s; }
         
@@ -386,7 +367,7 @@
         
         @keyframes arrowPulse {
             0% { opacity: 0.7; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.15); }
+            50% { opacity: 1; transform: scale(1.1); }
             100% { opacity: 0.7; transform: scale(1); }
         }
         .arrow-pulse {
@@ -400,12 +381,9 @@
             .header { padding: 12px 12px; }
             .nav-section { padding: 12px 12px; }
             .decision-panel { padding: 6px 12px; gap: 10px; }
-            .direction-arrow { font-size: 1.2rem; min-width: 32px; }
+            .direction-arrow { font-size: 0.9rem; min-width: 24px; }
             #live-price { font-size: 2rem; }
             .price-decimal { font-size: 1.8rem; }
-            .adx-status, .ema34-status { padding: 3px 6px; }
-            .adx-value { min-width: 28px; }
-            .ema34-value { min-width: 50px; }
         }
     </style>
 </head>
@@ -414,7 +392,7 @@
     <div class="terminal-container" id="main-terminal">
         <header class="header">
             <div class="brand-container">
-                <div class="brand">SMC_APEX v17.3.0</div>
+                <div class="brand">SMC_APEX v16.8.0</div>
                 <div class="meta-label-sub">URTRADER TERMINAL | 3ANGEL</div>
             </div>
             <div id="sys-status">
@@ -442,20 +420,18 @@
                     <span class="adx-value" id="adx-value">--</span>
                     <div class="adx-bar-container"><div class="adx-bar" id="adx-bar"></div></div>
                 </div>
-                <div id="direction-arrow" class="direction-arrow">⬌</div>
                 <div class="ema34-status" id="ema34-status">
                     <span>📊 EMA34</span>
                     <span class="ema34-value" id="ema34-value">--</span>
                 </div>
-            </div>
-            
-            <div class="decision-panel">
-                <div class="decision-text">
-                    <span class="decision-label">🎯 DECISION:</span>
-                    <span id="decision-status">🔍 ANALYZING...</span>
+                <div class="decision-panel">
+                    <div class="decision-text">
+                        <span class="decision-label">🎯 DECISION:</span>
+                        <span id="decision-status">🔍 ANALYZING...</span>
+                    </div>
+                    <div id="direction-arrow" class="direction-arrow">⬌</div>
                 </div>
             </div>
-            
             <div id="live-price" onclick="smartCopy('live-price')">0.00</div>
             
             <div class="rsi-panel">
@@ -519,35 +495,23 @@
     let periodicInterval = null;
     let stuckCheckInterval = null;
     let heartbeatInterval = null;
-    let restFallbackInterval = null;
-    let wsMonitorInterval = null;
+    let uiUpdateInterval = null;
     let isManualDisconnect = false;
     let reconnectDelay = 1000;
     let lastStructureUpdateTime = 0;
     let lastDecision = "";
     let lastArrowDirection = "";
-    let lastUIElementsUpdate = 0;
-    let recentPrices = [];
-    let lastDecisionPrice = 0;
-    let lastWSMessageTime = Date.now();
-    let isUsingFallback = false;
-    const UI_UPDATE_INTERVAL = 100;
-    const THROTTLE_MINUTES = 2;
+    let pendingUpdate = false;
+    let priceBuffer = [];
+    let lastUIUpdate = 0;
+    const UI_UPDATE_INTERVAL = 100; // 100ms throttle untuk UI
     
-    // ==================== SIGNAL COOLDOWN SYSTEM ====================
-    let lastSignalExpiry = 0;
-    let lastSignalDecision = "";
-    let lastSignalTime = 0;
-    
-    // MTF Background Data dengan analisis lebih akurat
-    let mtfAnalysisCache = { 
-        m5: { bias: "NEUTRAL", strength: 0, ema50: 0, ema200: 0, macd: 0 },
-        m15: { bias: "NEUTRAL", strength: 0, ema50: 0, ema200: 0, macd: 0 },
-        h1: { bias: "NEUTRAL", strength: 0, ema50: 0, ema200: 0, macd: 0 }
-    };
+    // MTF Background Data
+    let mtfBiasCache = { m5: "NEUTRAL", m15: "NEUTRAL", h1: "NEUTRAL" };
     
     // ==================== THROTTLE SYSTEM ====================
     const throttleMap = new Map();
+    const THROTTLE_MINUTES = 5;
     
     function isThrottled(pair, timeframe) {
         const key = `${pair}_${timeframe}`;
@@ -565,7 +529,7 @@
         throttleMap.set(key, Date.now());
     }
     
-    // ==================== ATR CALCULATION ====================
+    // ==================== ATR CALCULATION (OPTIMIZED) ====================
     let cachedATR = 0;
     let lastATRCalc = 0;
     
@@ -587,206 +551,7 @@
         return cachedATR;
     }
     
-    // ==================== EMA CALCULATION ====================
-    function calculateEMA(data, period) {
-        if (!data.length || data.length < period) return 0;
-        const multiplier = 2 / (period + 1);
-        let ema = data[0].c;
-        for (let i = 1; i < data.length; i++) {
-            ema = (data[i].c - ema) * multiplier + ema;
-        }
-        return ema;
-    }
-    
-    // ==================== MACD CALCULATION ====================
-    function calculateMACD(data) {
-        if (!data.length || data.length < 26) return 0;
-        
-        const ema12 = calculateEMA(data, 12);
-        const ema26 = calculateEMA(data, 26);
-        const macdLine = ema12 - ema26;
-        
-        let macdValues = [];
-        for (let i = 25; i < data.length; i++) {
-            const slice = data.slice(0, i + 1);
-            const e12 = calculateEMA(slice, 12);
-            const e26 = calculateEMA(slice, 26);
-            macdValues.push(e12 - e26);
-        }
-        
-        if (macdValues.length < 9) return macdLine;
-        
-        let signalLine = 0;
-        const signalMultiplier = 2 / (9 + 1);
-        signalLine = macdValues[0];
-        for (let i = 1; i < macdValues.length; i++) {
-            signalLine = (macdValues[i] - signalLine) * signalMultiplier + signalLine;
-        }
-        
-        return macdLine - signalLine;
-    }
-    
-    // ==================== ADVANCED MTF ANALYSIS ====================
-    async function fetchAdvancedMTFData() {
-        const timeframes = [
-            { name: '5m', interval: '5m', limit: 250 },
-            { name: '15m', interval: '15m', limit: 250 },
-            { name: '1h', interval: '1h', limit: 250 }
-        ];
-        
-        for (const tf of timeframes) {
-            try {
-                const url = `https://fapi.binance.com/fapi/v1/klines?symbol=${currentPair}&interval=${tf.interval}&limit=${tf.limit}`;
-                const resp = await fetch(url);
-                const data = await resp.json();
-                
-                if (Array.isArray(data) && data.length > 0) {
-                    const tfData = data.map(d => ({ 
-                        o: parseFloat(d[1]), 
-                        h: parseFloat(d[2]), 
-                        l: parseFloat(d[3]), 
-                        c: parseFloat(d[4]),
-                        t: d[0]
-                    }));
-                    
-                    const currentPriceMTF = tfData[tfData.length - 1].c;
-                    const prevPrice = tfData[tfData.length - 2]?.c || currentPriceMTF;
-                    
-                    // 1. Analisis berdasarkan EMA50 dan EMA200
-                    const ema50 = calculateEMA(tfData, 50);
-                    const ema200 = calculateEMA(tfData, 200);
-                    const isEmaBullish = currentPriceMTF > ema50 && ema50 > ema200;
-                    const isEmaBearish = currentPriceMTF < ema50 && ema50 < ema200;
-                    
-                    // 2. Analisis berdasarkan swing structure
-                    const swingPoints = detectSwingPointsWithMinRange(tfData, getFractalLookback());
-                    const isAboveSwing = currentPriceMTF > swingPoints.swingHigh;
-                    const isBelowSwing = currentPriceMTF < swingPoints.swingLow;
-                    const isMidRange = currentPriceMTF > (swingPoints.swingHigh + swingPoints.swingLow) / 2;
-                    
-                    // 3. Analisis MACD momentum
-                    const macd = calculateMACD(tfData);
-                    const isMacdBullish = macd > 0;
-                    const isMacdBearish = macd < 0;
-                    
-                    // 4. Analisis trend berdasarkan price action
-                    const priceChange = ((currentPriceMTF - prevPrice) / prevPrice) * 100;
-                    const priceChangeAbs = Math.abs(priceChange);
-                    const isStrongMove = priceChangeAbs > (currentPair === "XAUUSDT" ? 0.3 : 1.5);
-                    
-                    // 5. Kombinasi semua faktor untuk menentukan bias
-                    let bullishScore = 0;
-                    let bearishScore = 0;
-                    
-                    if (isEmaBullish) bullishScore += 2;
-                    if (isEmaBearish) bearishScore += 2;
-                    if (isAboveSwing) bullishScore += 3;
-                    if (isBelowSwing) bearishScore += 3;
-                    if (isMidRange && currentPriceMTF > ema50) bullishScore += 1;
-                    if (isMidRange && currentPriceMTF < ema50) bearishScore += 1;
-                    if (isMacdBullish) bullishScore += 2;
-                    if (isMacdBearish) bearishScore += 2;
-                    if (isStrongMove && priceChange > 0) bullishScore += 2;
-                    if (isStrongMove && priceChange < 0) bearishScore += 2;
-                    
-                    // Tentukan bias berdasarkan skor
-                    let bias = "NEUTRAL";
-                    let strength = 0;
-                    
-                    if (bullishScore > bearishScore + 2) {
-                        bias = "BULLISH";
-                        strength = Math.min(100, Math.round((bullishScore / (bullishScore + bearishScore)) * 100));
-                    } else if (bearishScore > bullishScore + 2) {
-                        bias = "BEARISH";
-                        strength = Math.min(100, Math.round((bearishScore / (bullishScore + bearishScore)) * 100));
-                    } else {
-                        bias = "NEUTRAL";
-                        strength = 50;
-                    }
-                    
-                    // Simpan hasil analisis
-                    if (tf.name === '5m') {
-                        mtfAnalysisCache.m5 = { bias, strength, ema50, ema200, macd };
-                    } else if (tf.name === '15m') {
-                        mtfAnalysisCache.m15 = { bias, strength, ema50, ema200, macd };
-                    } else if (tf.name === '1h') {
-                        mtfAnalysisCache.h1 = { bias, strength, ema50, ema200, macd };
-                    }
-                }
-            } catch (err) {
-                console.warn(`Advanced MTF fetch error for ${tf.interval}:`, err);
-            }
-        }
-        updateAdvancedMTFDisplay();
-    }
-    
-    // ==================== UPDATED: ADVANCED MTF DISPLAY (SEDERHANA) ====================
-    function updateAdvancedMTFDisplay() {
-        const mtfTextElem = document.getElementById('mtf-paragraph-text');
-        if (!mtfTextElem) return;
-        
-        const getBiasText = (bias, strength) => {
-            if (bias === "BULLISH") return `BULLISH ▲ ${strength}%`;
-            if (bias === "BEARISH") return `BEARISH ▼ ${strength}%`;
-            return "NEUTRAL ⚪";
-        };
-        
-        const getBiasClass = (bias) => {
-            if (bias === "BULLISH") return "mtf-highlight-bull";
-            if (bias === "BEARISH") return "mtf-highlight-bear";
-            return "mtf-highlight-neutral";
-        };
-        
-        const h1 = mtfAnalysisCache.h1;
-        const m15 = mtfAnalysisCache.m15;
-        const m5 = mtfAnalysisCache.m5;
-        
-        // Hitung confluence score
-        let bullishCount = 0;
-        let bearishCount = 0;
-        let totalStrength = 0;
-        
-        [h1, m15, m5].forEach(tf => {
-            if (tf.bias === "BULLISH") {
-                bullishCount++;
-                totalStrength += tf.strength;
-            } else if (tf.bias === "BEARISH") {
-                bearishCount++;
-                totalStrength += (100 - tf.strength);
-            }
-        });
-        
-        const avgStrength = totalStrength / 3;
-        let confluenceText = "";
-        let confluenceClass = "";
-        let confluenceStrength = "";
-        
-        if (bullishCount >= 2 && bearishCount < 2) {
-            confluenceText = `BULLISH CONFLUENCE ✓ (${bullishCount}/3)`;
-            confluenceClass = "mtf-highlight-bull";
-            confluenceStrength = ` (${Math.round(avgStrength)}%)`;
-        } else if (bearishCount >= 2 && bullishCount < 2) {
-            confluenceText = `BEARISH CONFLUENCE ✓ (${bearishCount}/3)`;
-            confluenceClass = "mtf-highlight-bear";
-            confluenceStrength = ` (${Math.round(avgStrength)}%)`;
-        } else {
-            confluenceText = `MIXED SIGNALS ⚠️ (B:${bullishCount} B:${bearishCount})`;
-            confluenceClass = "mtf-highlight-neutral";
-            confluenceStrength = "";
-        }
-        
-        mtfTextElem.innerHTML = `📊 MULTI-TIMEFRAME: 
-            <br>
-            <span class="mtf-highlight">H1</span> → <span class="${getBiasClass(h1.bias)}">${getBiasText(h1.bias, h1.strength)}</span>
-            &nbsp;|&nbsp;
-            <span class="mtf-highlight">M15</span> → <span class="${getBiasClass(m15.bias)}">${getBiasText(m15.bias, m15.strength)}</span>
-            &nbsp;|&nbsp;
-            <span class="mtf-highlight">M5</span> → <span class="${getBiasClass(m5.bias)}">${getBiasText(m5.bias, m5.strength)}</span>
-            <br>
-            🧩 <span class="mtf-highlight">CONFLUENCE</span> → <span class="${confluenceClass}">${confluenceText}</span>${confluenceStrength}`;
-    }
-    
-    // ==================== FVG MITIGATION ====================
+    // ==================== IMPROVED FVG MITIGATION ====================
     function detectCandleImbalance(data) {
         if (!data.length || data.length < 3) return null;
         const lastThree = data.slice(-3);
@@ -830,9 +595,8 @@
         return isBullish ? depth >= minDepth : (100 - depth) >= minDepth;
     }
     
-    // ENGINE tanpa SL
     let engine = { 
-        f618: 0, deep: 0, tp: 0, range: 0, bias: "SCANNING",
+        f618: 0, deep: 0, sl: 0, tp: 0, range: 0, bias: "SCANNING",
         swingHigh: 0, swingLow: 0,
         lastSwingHigh: 0, lastSwingLow: 0,
         sweepDetected: false, bosConfirmed: false, liquiditySide: null,
@@ -879,12 +643,12 @@
         }
     }
     
-    // ==================== DIRECTION ARROW FUNCTION ====================
+    // OPTIMIZED: Direction arrow dengan minimal update
     function updateDirectionArrow(currentPrice) {
         const arrowElem = document.getElementById('direction-arrow');
         if (!arrowElem) return;
     
-        if (engine.adx < 15) {
+        if (engine.adx < 20) {
             if (lastArrowDirection !== "neutral") {
                 arrowElem.innerHTML = "⬌";
                 arrowElem.style.color = "var(--silver-dark)";
@@ -895,34 +659,16 @@
         }
     
         const atr = calculateATR(14);
-        const threshold = currentPair === "XAUUSDT" ? (atr * 0.08) : (atr * 0.07);
-        
-        const priceChange = Math.abs(currentPrice - (recentPrices[recentPrices.length - 2] || currentPrice));
-        const momentumThreshold = currentPair === "XAUUSDT" ? 0.15 : 20;
-        const hasMomentum = priceChange > momentumThreshold;
-        
+        const threshold = currentPair === "XAUUSDT" ? (atr * 0.12) : (atr * 0.1);
         const priceAboveSwing = currentPrice > engine.swingHigh;
         const priceBelowSwing = currentPrice < engine.swingLow;
-        
-        let shortTermMomentum = 0;
-        if (recentPrices.length >= 3) {
-            const p1 = recentPrices[recentPrices.length - 3];
-            const p2 = recentPrices[recentPrices.length - 1];
-            shortTermMomentum = p2 - p1;
-        }
-        
-        recentPrices.push(currentPrice);
-        if (recentPrices.length > 5) recentPrices.shift();
     
         let direction = "neutral";
         
-        if ((currentPrice > (engine.ema34 + threshold) || priceAboveSwing || (hasMomentum && shortTermMomentum > 0)) && engine.plusDI > engine.minusDI) {
+        if ((currentPrice > (engine.ema34 + threshold) || priceAboveSwing) && engine.plusDI > engine.minusDI) {
             direction = "up";
-        } else if ((currentPrice < (engine.ema34 - threshold) || priceBelowSwing || (hasMomentum && shortTermMomentum < 0)) && engine.minusDI > engine.plusDI) {
+        } else if ((currentPrice < (engine.ema34 - threshold) || priceBelowSwing) && engine.minusDI > engine.plusDI) {
             direction = "down";
-        }
-        else if (hasMomentum && Math.abs(shortTermMomentum) > momentumThreshold * 2) {
-            direction = shortTermMomentum > 0 ? "up" : "down";
         }
     
         if (lastArrowDirection !== direction) {
@@ -930,18 +676,16 @@
             let arrowColor = "var(--silver-dark)";
     
             if (direction === "up") {
-                arrow = "▲";
+                arrow = "⬆";
                 arrowColor = "var(--accent)";
             } else if (direction === "down") {
-                arrow = "▼";
+                arrow = "⬇";
                 arrowColor = "var(--danger)";
             }
     
             arrowElem.innerHTML = arrow;
             arrowElem.style.color = arrowColor;
-            arrowElem.style.textShadow = direction !== "neutral" ? `0 0 8px ${arrowColor}` : "none";
-            arrowElem.classList.add('arrow-pulse');
-            setTimeout(() => arrowElem.classList.remove('arrow-pulse'), 300);
+            arrowElem.style.textShadow = direction !== "neutral" ? `0 0 6px ${arrowColor}` : "none";
             lastArrowDirection = direction;
         }
     }
@@ -962,12 +706,6 @@
             wsStatusText.innerText = message || 'LIVE';
             if (sysStatus) sysStatus.style.color = 'var(--accent)';
             reconnectDelay = 1000;
-            isUsingFallback = false;
-        } else if (status === 'fallback') {
-            wsStatusDot.className = 'ws-status-dot fallback';
-            wsStatusText.innerText = message || 'FALLBACK';
-            if (sysStatus) sysStatus.style.color = 'var(--blue)';
-            isUsingFallback = true;
         } else if (status === 'reconnect') {
             wsStatusDot.className = 'ws-status-dot reconnect';
             wsStatusText.innerText = message || 'RECONNECT';
@@ -987,8 +725,7 @@
         if (periodicInterval) { clearInterval(periodicInterval); periodicInterval = null; }
         if (stuckCheckInterval) { clearInterval(stuckCheckInterval); stuckCheckInterval = null; }
         if (heartbeatInterval) { clearInterval(heartbeatInterval); heartbeatInterval = null; }
-        if (restFallbackInterval) { clearInterval(restFallbackInterval); restFallbackInterval = null; }
-        if (wsMonitorInterval) { clearInterval(wsMonitorInterval); wsMonitorInterval = null; }
+        if (uiUpdateInterval) { clearInterval(uiUpdateInterval); uiUpdateInterval = null; }
         if (reconnectTimer) { clearTimeout(reconnectTimer); reconnectTimer = null; }
     }
     
@@ -1007,54 +744,6 @@
             wsConnection = null;
         }
         setTimeout(() => { isManualDisconnect = false; }, 100);
-    }
-    
-    // ==================== REST FALLBACK ====================
-    async function fetchLatestPrice() {
-        try {
-            const url = `https://fapi.binance.com/fapi/v1/ticker/price?symbol=${currentPair}`;
-            const resp = await fetch(url);
-            const data = await resp.json();
-            if (data && data.price) {
-                const newPrice = parseFloat(data.price);
-                if (newPrice !== lastPrice && !isNaN(newPrice) && newPrice > 0) {
-                    updateUI(newPrice);
-                    lastWSMessageTime = Date.now();
-                }
-                return newPrice;
-            }
-        } catch (err) {
-            console.warn("REST fallback error:", err);
-        }
-        return null;
-    }
-    
-    // ==================== WS MONITOR ====================
-    function startWSMonitor() {
-        if (wsMonitorInterval) clearInterval(wsMonitorInterval);
-        wsMonitorInterval = setInterval(() => {
-            const now = Date.now();
-            if (wsConnection && wsConnection.readyState === WebSocket.OPEN) {
-                if (now - lastWSMessageTime > 3000) {
-                    updateWSStatus('fallback', 'FALLBACK');
-                    fetchLatestPrice();
-                } else {
-                    if (isUsingFallback) {
-                        updateWSStatus('live', 'LIVE');
-                    }
-                }
-            }
-        }, 2000);
-    }
-    
-    // ==================== REST FORCE REFRESH ====================
-    function startRestForceRefresh() {
-        if (restFallbackInterval) clearInterval(restFallbackInterval);
-        restFallbackInterval = setInterval(() => {
-            if (!isReloading) {
-                fetchLatestPrice();
-            }
-        }, 3000);
     }
     
     function checkAndUpdateStructure(currentPrice) {
@@ -1161,6 +850,7 @@
         return { swingHigh, swingLow, range: swingHigh - swingLow };
     }
     
+    // OPTIMIZED: ADX calculation with caching
     let cachedADX = 25;
     let lastADXCalc = 0;
     
@@ -1346,39 +1036,39 @@
         }
     }
     
-    // ==================== FINAL DECISION DENGAN MTF YANG AKURAT ====================
+    async function fetchMTFData() {
+        const timeframes = ['5m', '15m', '1h'];
+        for (const tf of timeframes) {
+            try {
+                const url = `https://fapi.binance.com/fapi/v1/klines?symbol=${currentPair}&interval=${tf}&limit=100`;
+                const resp = await fetch(url);
+                const data = await resp.json();
+                if (Array.isArray(data) && data.length > 0) {
+                    const tfData = data.map(d => ({ h: parseFloat(d[2]), l: parseFloat(d[3]), c: parseFloat(d[4]) }));
+                    const lastPriceMTF = tfData[tfData.length - 1].c;
+                    const swingPoints = detectSwingPointsWithMinRange(tfData, getFractalLookback());
+                    const bias = lastPriceMTF > (swingPoints.swingHigh + swingPoints.swingLow) / 2 ? "BULLISH" : "BEARISH";
+                    
+                    if (tf === '5m') mtfBiasCache.m5 = bias;
+                    else if (tf === '15m') mtfBiasCache.m15 = bias;
+                    else if (tf === '1h') mtfBiasCache.h1 = bias;
+                }
+            } catch (err) {
+                console.warn(`MTF fetch error for ${tf}:`, err);
+            }
+        }
+        updateMTFPargraph();
+    }
+    
     function updateFinalDecision() {
         const decisionElem = document.getElementById('decision-status');
         if (!decisionElem) return;
         
         const currentPrice = lastPrice;
-        const now = Date.now();
-        
-        // CEK APAKAH MASIH DALAM MASA COOLDOWN SINYAL TERAKHIR
-        const isInCooldown = now < lastSignalExpiry;
-        
-        // JIKA MASIH COOLDOWN, TAMPILKAN SINYAL TERAKHIR
-        if (isInCooldown && lastSignalDecision) {
-            const remainingSeconds = Math.ceil((lastSignalExpiry - now) / 1000);
-            const minutes = Math.floor(remainingSeconds / 60);
-            const seconds = remainingSeconds % 60;
-            
-            if (remainingSeconds > 60) {
-                decisionElem.innerHTML = `${lastSignalDecision} ⏱️ ${minutes}m`;
-            } else {
-                decisionElem.innerHTML = `${lastSignalDecision} ⏱️ ${seconds}s`;
-            }
-            decisionElem.style.color = "var(--accent)";
-            decisionElem.style.background = "rgba(0, 255, 170, 0.2)";
-            return;
-        }
-        
-        // ==================== NORMAL ANALYSIS ====================
-        
         const isBullishBias = engine.bias === "BULLISH" || engine.bias === "BULLISH_BOS";
         const isBearishBias = engine.bias === "BEARISH" || engine.bias === "BEARISH_BOS";
-        const isTrendStrong = engine.adx > 20;
-        const isRanging = engine.adx < 15;
+        const isTrendStrong = engine.adx > 25;
+        const isRanging = engine.adx < 20;
         
         const entryZoneLow = Math.min(engine.f618, engine.deep);
         const entryZoneHigh = Math.max(engine.f618, engine.deep);
@@ -1390,13 +1080,12 @@
         const fvgDepth = getFVGMitigationDepthAdvanced(engine.swingHigh, engine.swingLow, currentPrice, candleData);
         const isFVGReadyBool = isFVGReady(fvgDepth, isBullishBias || isBOSConfirmed, candleData);
         
-        // Menggunakan MTF Analysis yang lebih akurat
-        const m5Bullish = mtfAnalysisCache.m5.bias === "BULLISH";
-        const m15Bullish = mtfAnalysisCache.m15.bias === "BULLISH";
-        const h1Bullish = mtfAnalysisCache.h1.bias === "BULLISH";
-        const m5Bearish = mtfAnalysisCache.m5.bias === "BEARISH";
-        const m15Bearish = mtfAnalysisCache.m15.bias === "BEARISH";
-        const h1Bearish = mtfAnalysisCache.h1.bias === "BEARISH";
+        const m5Bullish = mtfBiasCache.m5 === "BULLISH";
+        const m15Bullish = mtfBiasCache.m15 === "BULLISH";
+        const h1Bullish = mtfBiasCache.h1 === "BULLISH";
+        const m5Bearish = mtfBiasCache.m5 === "BEARISH";
+        const m15Bearish = mtfBiasCache.m15 === "BEARISH";
+        const h1Bearish = mtfBiasCache.h1 === "BEARISH";
         
         const bullishCount = (m5Bullish ? 1 : 0) + (m15Bullish ? 1 : 0) + (h1Bullish ? 1 : 0);
         const bearishCount = (m5Bearish ? 1 : 0) + (m15Bearish ? 1 : 0) + (h1Bearish ? 1 : 0);
@@ -1407,9 +1096,7 @@
         const isAboveEMA = currentPrice > engine.ema34;
         const isBelowEMA = currentPrice < engine.ema34;
         
-        const priceChange = Math.abs(currentPrice - (lastDecisionPrice || currentPrice));
-        const hasSignificantMove = currentPair === "XAUUSDT" ? priceChange > 0.3 : priceChange > 30;
-        lastDecisionPrice = currentPrice;
+        const throttleCheck = isThrottled(currentPair, currentTF);
         
         let decision = "";
         let decisionColor = "";
@@ -1417,53 +1104,48 @@
         let shouldAnimate = false;
         let isSignalAllowed = false;
         
-        // PRIORITAS 1: STRONG BUY (Sweep/BOS)
-        if ((isTrendStrong || hasSignificantMove) && !isRanging && isPriceInZone && (isBullishBias && (isBOSConfirmed || isSweepActive)) && lastArrowDirection === "up") {
+        if (isTrendStrong && !isRanging && isPriceInZone && (isBullishBias && (isBOSConfirmed || isSweepActive)) && lastArrowDirection === "up") {
             isSignalAllowed = true;
             decision = "✅ BUY NOW! 🔥";
             decisionColor = "var(--accent)";
             decisionBg = "rgba(0, 255, 170, 0.25)";
             shouldAnimate = true;
         }
-        // PRIORITAS 2: STRONG SELL (Sweep/BOS)
-        else if ((isTrendStrong || hasSignificantMove) && !isRanging && isPriceInZone && (isBearishBias && (isBOSConfirmed || isSweepActive)) && lastArrowDirection === "down") {
+        else if (isTrendStrong && !isRanging && isPriceInZone && (isBearishBias && (isBOSConfirmed || isSweepActive)) && lastArrowDirection === "down") {
             isSignalAllowed = true;
             decision = "🔻 SELL NOW! 🔥";
             decisionColor = "var(--orange)";
             decisionBg = "rgba(255, 136, 77, 0.25)";
             shouldAnimate = true;
         }
-        // PRIORITAS 3: MTF CONFLUENCE (AKURAT)
-        else if ((isTrendStrong || hasSignificantMove) && !isRanging && isPriceInZone && isMTFBullish && !isBearishBias) {
+        else if (isTrendStrong && !isRanging && isPriceInZone && isMTFBullish && !isBearishBias) {
             isSignalAllowed = true;
             decision = "✅ BUY NOW! 🔥 (MTF)";
             decisionColor = "var(--accent)";
             decisionBg = "rgba(0, 255, 170, 0.2)";
             shouldAnimate = true;
         }
-        else if ((isTrendStrong || hasSignificantMove) && !isRanging && isPriceInZone && isMTFBearish && !isBullishBias) {
+        else if (isTrendStrong && !isRanging && isPriceInZone && isMTFBearish && !isBullishBias) {
             isSignalAllowed = true;
             decision = "🔻 SELL NOW! 🔥 (MTF)";
             decisionColor = "var(--orange)";
             decisionBg = "rgba(255, 136, 77, 0.2)";
             shouldAnimate = true;
         }
-        // PRIORITAS 4: EMA34
-        else if ((isTrendStrong || hasSignificantMove) && !isRanging && isPriceInZone && isAboveEMA && !isBearishBias) {
+        else if (isTrendStrong && !isRanging && isPriceInZone && isAboveEMA && !isBearishBias) {
             isSignalAllowed = true;
             decision = "✅ BUY NOW! 🔥 (EMA)";
             decisionColor = "var(--accent)";
             decisionBg = "rgba(0, 255, 170, 0.2)";
             shouldAnimate = true;
         }
-        else if ((isTrendStrong || hasSignificantMove) && !isRanging && isPriceInZone && isBelowEMA && !isBullishBias) {
+        else if (isTrendStrong && !isRanging && isPriceInZone && isBelowEMA && !isBullishBias) {
             isSignalAllowed = true;
             decision = "🔻 SELL NOW! 🔥 (EMA)";
             decisionColor = "var(--orange)";
             decisionBg = "rgba(255, 136, 77, 0.2)";
             shouldAnimate = true;
         }
-        // KONDISI LAIN
         else if (isSweepActive && !isBOSConfirmed) {
             decision = "⏳ WAITING BOS...";
             decisionColor = "var(--orange)";
@@ -1474,12 +1156,12 @@
             decisionColor = "var(--gold)";
             decisionBg = "rgba(255, 204, 0, 0.1)";
         }
-        else if (isRanging && !hasSignificantMove) {
-            decision = "⏳ WAIT (LOW VOLATILITY)";
+        else if (isRanging) {
+            decision = "⏳ WAIT (ADX TOO LOW)";
             decisionColor = "var(--silver-dark)";
             decisionBg = "rgba(170, 170, 170, 0.1)";
         }
-        else if (isPriceInZone && (isTrendStrong || hasSignificantMove) && !isSweepActive && !isBOSConfirmed) {
+        else if (isPriceInZone && isTrendStrong && !isSweepActive && !isBOSConfirmed) {
             decision = "⏳ WAITING SWEEP...";
             decisionColor = "var(--orange)";
             decisionBg = "rgba(255, 136, 77, 0.1)";
@@ -1490,7 +1172,6 @@
             decisionBg = "rgba(170, 170, 170, 0.05)";
         }
         
-        // FVG VALIDATION
         if (isSignalAllowed) {
             if (!isFVGReadyBool) {
                 const fvgNeeded = 30;
@@ -1498,34 +1179,20 @@
                 decision = `⏳ FVG: ${Math.round(currentFVG)}%/${fvgNeeded}%`;
                 decisionColor = "var(--orange)";
                 decisionBg = "rgba(255, 136, 77, 0.15)";
-                isSignalAllowed = false;
                 shouldAnimate = false;
             }
-        }
-        
-        // JIKA SINYAL VALID, AKTIFKAN COOLDOWN
-        if (isSignalAllowed) {
-            lastSignalExpiry = now + (THROTTLE_MINUTES * 60 * 1000);
-            lastSignalDecision = decision;
-            lastSignalTime = now;
-            
-            decisionElem.innerHTML = decision;
-            decisionElem.style.color = decisionColor;
-            decisionElem.style.background = decisionBg;
-            
-            if (shouldAnimate) {
-                decisionElem.classList.add('decision-animate');
-                setTimeout(() => {
-                    if (decisionElem) decisionElem.classList.remove('decision-animate');
-                }, 600);
+            else if (throttleCheck.throttled) {
+                const minutes = Math.ceil(throttleCheck.remaining / 60);
+                decision = `⏳ THROTTLED (${minutes}m)`;
+                decisionColor = "var(--orange)";
+                decisionBg = "rgba(255, 136, 77, 0.15)";
+                shouldAnimate = false;
             }
-            
-            updateThrottle(currentPair, currentTF);
-            lastDecision = decision;
-            return;
+            else {
+                updateThrottle(currentPair, currentTF);
+            }
         }
         
-        // TAMPILKAN DECISION NON-SINYAL
         if (lastDecision !== decision) {
             shouldAnimate = true;
             lastDecision = decision;
@@ -1552,8 +1219,8 @@
         const barWidth = Math.min(100, (adxValue / 60) * 100);
         adxBar.style.width = barWidth + "%";
         let statusClass = "", barColor = "";
-        if (adxValue < 15) { statusClass = "ranging"; barColor = "var(--silver-dark)"; }
-        else if (adxValue < 20) { statusClass = "weak"; barColor = "var(--gold)"; }
+        if (adxValue < 20) { statusClass = "ranging"; barColor = "var(--silver-dark)"; }
+        else if (adxValue < 25) { statusClass = "weak"; barColor = "var(--gold)"; }
         else { statusClass = "strong"; barColor = "var(--accent)"; }
         adxElem.className = `adx-status ${statusClass}`;
         adxBar.style.background = barColor;
@@ -1589,6 +1256,25 @@
         fvgElements.forEach(id => { const el = document.getElementById(id); if (el) { el.classList.add('fvg-highlight'); setTimeout(() => el.classList.remove('fvg-highlight'), 2000); } });
     }
     
+    function updateMTFPargraph() {
+        const mtfTextElem = document.getElementById('mtf-paragraph-text');
+        if (!mtfTextElem) return;
+        const getBiasText = (bias) => { if (bias === "BULLISH") return "BULLISH 🔼"; if (bias === "BEARISH") return "BEARISH 🔽"; return "NEUTRAL ⚪"; };
+        const getBiasClass = (bias) => { if (bias === "BULLISH") return "mtf-highlight-bull"; if (bias === "BEARISH") return "mtf-highlight-bear"; return "mtf-highlight-neutral"; };
+        const m5Bias = mtfBiasCache.m5, m15Bias = mtfBiasCache.m15, h1Bias = mtfBiasCache.h1;
+        const bullishCount = [m5Bias, m15Bias, h1Bias].filter(b => b === "BULLISH").length;
+        const bearishCount = [m5Bias, m15Bias, h1Bias].filter(b => b === "BEARISH").length;
+        let confluenceText = "", confluenceClass = "";
+        if (bullishCount >= 2) { confluenceText = "BULLISH CONFLUENCE ✓"; confluenceClass = "mtf-highlight-bull"; }
+        else if (bearishCount >= 2) { confluenceText = "BEARISH CONFLUENCE ✓"; confluenceClass = "mtf-highlight-bear"; }
+        else { confluenceText = "MIXED SIGNALS ⚠️"; confluenceClass = "mtf-highlight-neutral"; }
+        mtfTextElem.innerHTML = `📊 MULTI-TIMEFRAME: 
+            <span class="mtf-highlight">H1</span> → <span class="${getBiasClass(h1Bias)}">${getBiasText(h1Bias)}</span> &nbsp;|&nbsp; 
+            <span class="mtf-highlight">M15</span> → <span class="${getBiasClass(m15Bias)}">${getBiasText(m15Bias)}</span> &nbsp;|&nbsp; 
+            <span class="mtf-highlight">M5</span> → <span class="${getBiasClass(m5Bias)}">${getBiasText(m5Bias)}</span><br>
+            🧩 <span class="mtf-highlight">CONFLUENCE</span> → <span class="${confluenceClass}">${confluenceText}</span>`;
+    }
+    
     function calculateSMCLevels() {
         if (!candleData.length || candleData.length < 30) return;
         
@@ -1621,10 +1307,14 @@
             engine.f618 = swingLow + (range * 0.618);
             engine.deep = swingLow + (range * 0.79);
             engine.tp = swingHigh + (range * 0.23);
+            const distanceFromEntryToDeep = Math.abs(engine.deep - engine.f618);
+            engine.sl = Math.max(engine.f618 - (distanceFromEntryToDeep * 1.5), swingLow - (range * 0.1));
         } else {
             engine.f618 = swingHigh - (range * 0.618);
             engine.deep = swingHigh - (range * 0.79);
             engine.tp = swingLow - (range * 0.23);
+            const distanceFromEntryToDeep = Math.abs(engine.f618 - engine.deep);
+            engine.sl = Math.min(engine.f618 + (distanceFromEntryToDeep * 1.5), swingHigh + (range * 0.1));
         }
         
         updateSwingUI(); 
@@ -1664,6 +1354,9 @@
         if (lastPrice > 0) updateUI(lastPrice);
     }
     
+    // OPTIMIZED: UI update dengan throttling
+    let lastUIElementsUpdate = 0;
+    
     function updateUIElements(currentPrice) {
         const prec = getPrecision();
         
@@ -1690,8 +1383,8 @@
     
     function updateUI(currentPrice) {
         const now = Date.now();
-        lastWSMessageTime = now;
         
+        // Update harga selalu realtime
         const prec = getPrecision();
         const priceElem = document.getElementById('live-price');
         if (priceElem) {
@@ -1703,8 +1396,10 @@
             setTimeout(() => priceElem.style.color = "#fff", 100);
         }
         
+        // Update direction arrow realtime
         updateDirectionArrow(currentPrice);
         
+        // Update elemen lain dengan throttle (100ms)
         if (now - lastUIElementsUpdate >= UI_UPDATE_INTERVAL) {
             updateUIElements(currentPrice);
             updateFinalDecision();
@@ -1741,7 +1436,6 @@
         wsConnection.onopen = () => {
             console.log(`✅ WebSocket connected: ${currentPair}`);
             reconnectDelay = 1000;
-            lastWSMessageTime = Date.now();
             updateWSStatus('live', 'LIVE');
         };
         
@@ -1750,7 +1444,7 @@
                 const msg = JSON.parse(event.data);
                 if (msg.p && !isReloading) {
                     const tradePrice = parseFloat(msg.p);
-                    lastWSMessageTime = Date.now();
+                    // Process immediately without waiting
                     calculateSMCLevels(); 
                     detectLiquiditySweep(tradePrice); 
                     confirmBOS(tradePrice); 
@@ -1886,28 +1580,19 @@
         engine.bosConfirmed = false; 
         engine.liquiditySide = null; 
         engine.fvgEntryActive = false;
-        recentPrices = [];
-        
-        // Reset cooldown saat reload
-        lastSignalExpiry = 0;
-        lastSignalDecision = "";
-        
         updateFinalDecision();
         updateWSStatus('connecting', 'LOADING');
         
         await fetchKlines();
-        await fetchAdvancedMTFData();
-        await fetchLatestPrice();
+        await fetchMTFData();
         
         initWebSocket();
         startPeriodicUpdates();
         startStuckChecker();
         startHeartbeat();
-        startWSMonitor();
-        startRestForceRefresh();
         
         // MTF background refresh setiap 60 detik
-        setInterval(fetchAdvancedMTFData, 60000);
+        setInterval(fetchMTFData, 60000);
         
         document.querySelectorAll('.btn-tab').forEach(btn => btn.classList.remove('active'));
         const pairBtn = document.getElementById(`btn-${currentPair}`);
@@ -1915,10 +1600,11 @@
         if (pairBtn) pairBtn.classList.add('active');
         if (tfBtn) tfBtn.classList.add('active');
         
-        // Langsung hilangkan efek syncing
-        document.getElementById('main-terminal')?.classList.remove('syncing');
-        disableButtons(false);
-        isReloading = false;
+        setTimeout(() => {
+            document.getElementById('main-terminal')?.classList.remove('syncing');
+            disableButtons(false);
+            isReloading = false;
+        }, 500);
     }
     
     document.querySelectorAll('[data-pair]').forEach(btn => { 
