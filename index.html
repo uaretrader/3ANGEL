@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>SMC APEX v16.9.1 | URTRADER TERMINAL</title>
+    <title>SMC APEX v16.9.2 | URTRADER TERMINAL</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=JetBrains+Mono:wght@400;800&display=swap');
         
@@ -152,6 +152,7 @@
         .adx-status.weak .adx-direction { color: var(--gold); }
         .adx-status.ranging .adx-direction { color: var(--silver-dark); }
         
+        /* EMA34 STYLE - WARNA BERUBAH SESUAI BULL/BEAR */
         .ema34-status {
             background: transparent;
             padding: 4px 8px;
@@ -160,14 +161,23 @@
             gap: 6px;
             font-weight: 800;
         }
+        .ema34-status .ema34-label {
+            color: var(--silver-bright);
+        }
         .ema34-value { 
             font-weight: 800; 
             min-width: 70px; 
             text-align: right;
-            color: var(--orange) !important;
+            transition: color 0.2s ease;
         }
-        .ema34-status .ema34-label {
-            color: var(--silver-bright);
+        .ema34-status.bullish .ema34-value {
+            color: var(--accent) !important;
+        }
+        .ema34-status.bearish .ema34-value {
+            color: var(--danger) !important;
+        }
+        .ema34-status .ema34-value {
+            color: var(--orange);
         }
         
         .dxy-status {
@@ -461,7 +471,7 @@
     <div class="terminal-container" id="main-terminal">
         <header class="header">
             <div class="brand-container">
-                <div class="brand">SMC_APEX v16.9.1</div>
+                <div class="brand">SMC_APEX v16.9.2</div>
                 <div class="meta-label-sub">URTRADER TERMINAL | 3ANGEL</div>
             </div>
             <div id="sys-status">
@@ -491,7 +501,7 @@
                     <span id="adx-direction" class="adx-direction">⬌</span>
                 </div>
                 
-                <!-- Kolom 2: EMA34 dengan angka warna orange -->
+                <!-- Kolom 2: EMA34 dengan angka berubah warna (hijau/merah) -->
                 <div class="ema34-status" id="ema34-status">
                     <span class="ema34-label">📊 EMA</span>
                     <span class="ema34-value" id="ema34-value">--</span>
@@ -578,7 +588,6 @@
     let stuckCheckInterval = null;
     let heartbeatInterval = null;
     let restFallbackInterval = null;
-    let dxyInterval = null;
     let isManualDisconnect = false;
     let reconnectDelay = 1000;
     let lastStructureUpdateTime = 0;
@@ -592,28 +601,20 @@
     const UI_UPDATE_INTERVAL = 100;
     const THROTTLE_MINUTES = 2;
     
-    // ==================== DXY TRACKER (FIXED - Menggunakan data stabil) ====================
-    let dxyPrice = 104.50; // Default value
+    // ==================== DXY TRACKER ====================
+    let dxyPrice = 104.50;
     let dxyPrevPrice = 104.50;
     let dxyChange = 0;
     let dxyDirection = "neutral";
     let dxyLastFetch = 0;
     
-    // Fungsi untuk mendapatkan perkiraan DXY dari data pasar yang tersedia
     async function fetchDXY() {
         const now = Date.now();
-        // Jangan fetch terlalu sering (maks setiap 10 detik)
-        if (now - dxyLastFetch < 10000 && dxyPrice !== 0) {
-            return;
-        }
+        if (now - dxyLastFetch < 10000 && dxyPrice !== 0) return;
         dxyLastFetch = now;
         
         try {
-            // Menggunakan data XAUUSD untuk memperkirakan DXY (inverse correlation)
-            // Jika XAUUSD naik, DXY cenderung turun, dan sebaliknya
             if (lastPrice > 0 && currentPair === "XAUUSDT") {
-                // Simulasi DXY berdasarkan pergerakan XAUUSD (inverse correlation)
-                // DXY baseline sekitar 104.5, bergerak inverse dengan XAUUSD
                 const xauBaseline = 4500;
                 const xauDeviation = ((lastPrice - xauBaseline) / xauBaseline) * 100;
                 const estimatedDXY = 104.5 - (xauDeviation * 0.3);
@@ -627,45 +628,33 @@
                     dxyChange = 0;
                 }
                 
-                if (dxyChange > 0.05) {
-                    dxyDirection = "up";
-                } else if (dxyChange < -0.05) {
-                    dxyDirection = "down";
-                } else {
-                    dxyDirection = "neutral";
-                }
+                if (dxyChange > 0.05) dxyDirection = "up";
+                else if (dxyChange < -0.05) dxyDirection = "down";
+                else dxyDirection = "neutral";
                 
                 updateDXYDisplay();
-            } else {
-                // Untuk BTCUSD, gunakan harga BTC sebagai acuan
-                if (lastPrice > 0) {
-                    const btcBaseline = 67000;
-                    const btcDeviation = ((lastPrice - btcBaseline) / btcBaseline) * 100;
-                    const estimatedDXY = 104.5 - (btcDeviation * 0.15);
-                    
-                    dxyPrevPrice = dxyPrice;
-                    dxyPrice = Math.max(100, Math.min(110, estimatedDXY));
-                    
-                    if (dxyPrevPrice > 0) {
-                        dxyChange = ((dxyPrice - dxyPrevPrice) / dxyPrevPrice) * 100;
-                    } else {
-                        dxyChange = 0;
-                    }
-                    
-                    if (dxyChange > 0.05) {
-                        dxyDirection = "up";
-                    } else if (dxyChange < -0.05) {
-                        dxyDirection = "down";
-                    } else {
-                        dxyDirection = "neutral";
-                    }
-                    
-                    updateDXYDisplay();
+            } else if (lastPrice > 0) {
+                const btcBaseline = 67000;
+                const btcDeviation = ((lastPrice - btcBaseline) / btcBaseline) * 100;
+                const estimatedDXY = 104.5 - (btcDeviation * 0.15);
+                
+                dxyPrevPrice = dxyPrice;
+                dxyPrice = Math.max(100, Math.min(110, estimatedDXY));
+                
+                if (dxyPrevPrice > 0) {
+                    dxyChange = ((dxyPrice - dxyPrevPrice) / dxyPrevPrice) * 100;
+                } else {
+                    dxyChange = 0;
                 }
+                
+                if (dxyChange > 0.05) dxyDirection = "up";
+                else if (dxyChange < -0.05) dxyDirection = "down";
+                else dxyDirection = "neutral";
+                
+                updateDXYDisplay();
             }
         } catch (err) {
             console.warn("DXY calculation error:", err);
-            // Fallback ke nilai default
             dxyPrice = 104.50;
             dxyDirection = "neutral";
             updateDXYDisplay();
@@ -702,7 +691,6 @@
         if (dxyChangeElem) dxyChangeElem.innerText = changeText;
         dxyStatusElem.className = `dxy-status ${statusClass}`;
         
-        // Tooltip untuk korelasi
         if (currentPair === "XAUUSDT") {
             if (dxyDirection === "up") {
                 dxyStatusElem.title = "⚠️ DXY MENGUAT → XAUUSD cenderung TURUN";
@@ -717,9 +705,6 @@
     // ==================== SIGNAL COOLDOWN SYSTEM ====================
     let lastSignalExpiry = 0;
     let lastSignalDecision = "";
-    let lastSignalTime = 0;
-    let isShowingSignal = false;
-    let signalTimer = null;
     
     // MTF Background Data
     let mtfBiasCache = { m5: "NEUTRAL", m15: "NEUTRAL", h1: "NEUTRAL" };
@@ -967,9 +952,7 @@
         if (stuckCheckInterval) { clearInterval(stuckCheckInterval); stuckCheckInterval = null; }
         if (heartbeatInterval) { clearInterval(heartbeatInterval); heartbeatInterval = null; }
         if (restFallbackInterval) { clearInterval(restFallbackInterval); restFallbackInterval = null; }
-        if (dxyInterval) { clearInterval(dxyInterval); dxyInterval = null; }
         if (reconnectTimer) { clearTimeout(reconnectTimer); reconnectTimer = null; }
-        if (signalTimer) { clearTimeout(signalTimer); signalTimer = null; }
     }
     
     function cleanupWebSocket() {
@@ -1000,7 +983,7 @@
                 if (newPrice !== lastPrice && !isNaN(newPrice) && newPrice > 0) {
                     updateUI(newPrice);
                     lastWSMessageTime = Date.now();
-                    fetchDXY(); // Update DXY saat harga berubah
+                    fetchDXY();
                 }
                 return newPrice;
             }
@@ -1054,23 +1037,30 @@
         engine.adx = adxValue;
     }
     
+    // ==================== EMA34 UI DENGAN PERUBAHAN WARNA ====================
     function updateEMA34UI(currentPrice) {
         const emaValue = calculateEMA34();
         const emaElem = document.getElementById('ema34-value');
         const emaStatus = document.getElementById('ema34-status');
+        
         if (!emaElem || !emaStatus) return;
+        
         if (emaValue !== null && !isNaN(emaValue)) {
             engine.ema34 = emaValue;
             const prec = getPrecision();
             emaElem.innerText = emaValue.toFixed(prec);
+            
             if (currentPrice > emaValue) { 
-                emaStatus.className = "ema34-status bullish"; 
+                emaStatus.className = "ema34-status bullish";
+                emaElem.style.color = "var(--accent)";
             } else { 
-                emaStatus.className = "ema34-status bearish"; 
+                emaStatus.className = "ema34-status bearish";
+                emaElem.style.color = "var(--danger)";
             }
         } else { 
             emaElem.innerText = "--"; 
-            emaStatus.className = "ema34-status"; 
+            emaStatus.className = "ema34-status";
+            emaElem.style.color = "var(--orange)";
         }
     }
     
@@ -1558,7 +1548,6 @@
         if (isSignalAllowed) {
             lastSignalExpiry = now + (THROTTLE_MINUTES * 60 * 1000);
             lastSignalDecision = decision;
-            lastSignalTime = now;
             
             decisionElem.innerHTML = decision;
             decisionElem.style.color = decisionColor;
