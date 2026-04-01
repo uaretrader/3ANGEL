@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>SMC APEX v17.1.0 | URTRADER TERMINAL</title>
+    <title>SMC APEX v16.8.1 | URTRADER TERMINAL</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=JetBrains+Mono:wght@400;800&display=swap');
         
@@ -15,7 +15,6 @@
             --silver-bright: #e0e0e0; --silver-medium: #c0c0c0; --silver-dark: #a9a9a9; 
             --gold-dim: rgba(255, 204, 0, 0.12); --card-bg: #050505;
             --highlight-bull: #00cc88; --highlight-bear: #ff8866; --highlight-neutral: #aaaaaa;
-            --dxy-up: #ff8866; --dxy-down: #00cc88;
         }
         
         body { 
@@ -93,7 +92,7 @@
             font-weight: 800; 
             cursor: pointer; 
             font-family: 'JetBrains Mono'; 
-            transition: 0.1s; 
+            transition: 0.2s; 
             letter-spacing: 0.3px;
         }
         .btn-tab.active { 
@@ -116,99 +115,44 @@
         .hero-meta-row {
             display: flex;
             flex-wrap: wrap;
-            gap: 16px;
+            gap: 12px;
             width: 100%;
             margin-bottom: 16px;
             font-family: 'JetBrains Mono';
             font-weight: 800;
-            font-size: 0.75rem;
+            font-size: 0.65rem;
             letter-spacing: 0.5px;
             align-items: center;
-            justify-content: flex-start;
         }
         
         .adx-status {
-            background: transparent;
-            padding: 4px 8px;
+            background: rgba(0,0,0,0.6);
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--gold-dim);
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            font-weight: 800;
+            gap: 8px;
         }
-        .adx-bar-container { display: none; }
-        .adx-bar { display: none; }
-        .adx-value { 
-            font-weight: 800; 
-            min-width: 45px; 
-            text-align: right;
-            color: var(--silver-bright);
-        }
-        .adx-direction {
-            font-size: 1rem;
-            font-weight: 800;
-            margin-left: 4px;
-        }
-        .adx-status.strong .adx-direction { color: var(--accent); }
-        .adx-status.weak .adx-direction { color: var(--gold); }
-        .adx-status.ranging .adx-direction { color: var(--silver-dark); }
+        .adx-bar-container { width: 45px; height: 4px; background: #2a2a2a; border-radius: 4px; overflow: hidden; display: inline-block; }
+        .adx-bar { height: 100%; width: 0%; background: var(--silver-medium); transition: width 0.3s ease, background 0.3s ease; border-radius: 4px; }
+        .adx-value { font-weight: 800; min-width: 38px; text-align: right; }
+        .adx-status.strong { border-color: var(--accent); color: var(--accent); background: rgba(0, 255, 170, 0.1); }
+        .adx-status.weak { border-color: var(--gold); color: var(--gold); background: rgba(255, 204, 0, 0.1); }
+        .adx-status.ranging { border-color: var(--silver-dark); color: var(--silver-dark); }
         
         .ema34-status {
-            background: transparent;
-            padding: 4px 8px;
+            background: rgba(0,0,0,0.6);
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--gold-dim);
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            font-weight: 800;
+            gap: 8px;
         }
-        .ema34-status .ema34-label {
-            color: var(--silver-bright);
-        }
-        .ema34-value { 
-            font-weight: 800; 
-            min-width: 70px; 
-            text-align: right;
-            transition: color 0.1s ease;
-        }
-        .ema34-status.bullish .ema34-value {
-            color: var(--accent) !important;
-        }
-        .ema34-status.bearish .ema34-value {
-            color: var(--danger) !important;
-        }
-        .ema34-status .ema34-value {
-            color: var(--orange);
-        }
-        
-        .dxy-status {
-            background: transparent;
-            padding: 4px 8px;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-family: 'JetBrains Mono';
-            font-weight: 800;
-            font-size: 0.75rem;
-            transition: all 0.1s ease;
-        }
-        .dxy-value {
-            font-weight: 800;
-            min-width: 48px;
-            text-align: right;
-        }
-        .dxy-direction {
-            font-size: 1rem;
-            font-weight: 800;
-            transition: all 0.1s ease;
-        }
-        .dxy-change {
-            font-size: 0.65rem;
-            opacity: 0.8;
-            min-width: 45px;
-        }
-        .dxy-status.bullish .dxy-direction { color: var(--dxy-up); }
-        .dxy-status.bearish .dxy-direction { color: var(--dxy-down); }
-        .dxy-status.neutral .dxy-direction { color: var(--silver-dark); }
-        .dxy-status.loading { opacity: 0.6; }
+        .ema34-value { font-weight: 800; min-width: 65px; text-align: right; }
+        .ema34-status.bullish { border-color: var(--accent); color: var(--accent); background: rgba(0, 255, 170, 0.1); }
+        .ema34-status.bearish { border-color: var(--danger); color: var(--danger); background: rgba(255, 71, 87, 0.1); }
         
         .decision-panel {
             background: rgba(0,0,0,0.6);
@@ -221,12 +165,11 @@
             gap: 20px;
             font-family: 'JetBrains Mono';
             font-weight: 800;
-            font-size: 0.54rem;
+            font-size: 0.75rem;
             letter-spacing: 0.5px;
             transition: all 0.2s ease;
             flex: 1;
             min-height: 65px;
-            margin-top: 8px;
         }
         .decision-text {
             display: inline-flex;
@@ -239,12 +182,12 @@
         }
         #decision-status {
             font-weight: 900;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
         }
         .direction-arrow {
-            font-size: 1.1rem;
+            font-size: 1.5rem;
             font-weight: 800;
-            transition: all 0.1s ease;
+            transition: all 0.2s ease;
             min-width: 45px;
             text-align: right;
             cursor: default;
@@ -289,7 +232,7 @@
             height: 100%;
             width: 0%;
             background: var(--silver-medium);
-            transition: width 0.1s ease, background 0.1s;
+            transition: width 0.2s ease, background 0.2s;
         }
         
         .mtf-paragraph-card {
@@ -335,19 +278,18 @@
         
         @media (max-width: 700px) {
             .hero-meta-row { gap: 8px; }
-            .adx-status, .ema34-status, .dxy-status {
-                font-size: 0.65rem;
-                padding: 4px 6px;
+            .adx-status, .ema34-status, .decision-panel {
+                font-size: 0.55rem;
+                padding: 5px 12px;
             }
             .mtf-paragraph-text { font-size: 0.55rem; }
             .direction-arrow {
                 font-size: 1.2rem;
                 min-width: 35px;
             }
-            .dxy-change { display: none; }
         }
         
-        #live-price { font-family: 'JetBrains Mono'; font-size: 2.5rem; font-weight: 800; letter-spacing: -2px; color: #fff; line-height: 1; cursor: pointer; transition: color 0.05s linear; word-break: break-word; text-align: left; width: 100%; margin-top: 4px; }
+        #live-price { font-family: 'JetBrains Mono'; font-size: 2.5rem; font-weight: 800; letter-spacing: -2px; color: #fff; line-height: 1; cursor: pointer; transition: color 0.08s linear; word-break: break-word; text-align: left; width: 100%; margin-top: 4px; }
         .price-decimal { color: var(--accent); opacity: 0.7; font-size: 2.2rem; }
         
         .data-grid {
@@ -421,7 +363,7 @@
         .date-module-new { color: var(--silver-bright); }
         .clock-module-new { color: #fff; background: #000; border-color: var(--accent); }
         
-        .syncing { opacity: 0.8; transition: opacity 0.1s; pointer-events: none; }
+        .syncing { opacity: 0.6; transition: opacity 0.2s; pointer-events: none; }
         .syncing * { pointer-events: none; }
         .copied { color: #fff !important; text-shadow: 0 0 8px var(--accent); transition: 0.1s; }
         
@@ -431,7 +373,7 @@
             100% { transform: scale(1); opacity: 0.8; text-shadow: 0 0 0 var(--accent); }
         }
         .decision-animate {
-            animation: decisionPulse 0.6s ease-in-out !important;
+            animation: decisionPulse 0.8s ease-in-out !important;
         }
         
         @keyframes arrowPulse {
@@ -440,7 +382,7 @@
             100% { opacity: 0.7; transform: scale(1); }
         }
         .arrow-pulse {
-            animation: arrowPulse 0.2s ease !important;
+            animation: arrowPulse 0.3s ease !important;
         }
         
         @keyframes signalPulse {
@@ -462,8 +404,6 @@
             .direction-arrow { font-size: 1.1rem; min-width: 30px; }
             #live-price { font-size: 2rem; }
             .price-decimal { font-size: 1.8rem; }
-            .adx-status, .ema34-status, .dxy-status { font-size: 0.55rem; }
-            .ema34-value { min-width: 55px; }
         }
     </style>
 </head>
@@ -472,8 +412,8 @@
     <div class="terminal-container" id="main-terminal">
         <header class="header">
             <div class="brand-container">
-                <div class="brand">SMC_APEX v17.1.0</div>
-                <div class="meta-label-sub">URTRADER TERMINAL | E-FIVE</div>
+                <div class="brand">SMC_APEX v16.8.1</div>
+                <div class="meta-label-sub">URTRADER TERMINAL | 3ANGEL</div>
             </div>
             <div id="sys-status">
                 <span class="ws-status-dot" id="ws-status-dot"></span>
@@ -498,30 +438,20 @@
                 <div class="adx-status ranging" id="adx-status">
                     <span>ADX</span>
                     <span class="adx-value" id="adx-value">--</span>
-                    <span id="adx-direction" class="adx-direction">⬌</span>
+                    <div class="adx-bar-container"><div class="adx-bar" id="adx-bar"></div></div>
                 </div>
-                
                 <div class="ema34-status" id="ema34-status">
-                    <span class="ema34-label">📊 EMA</span>
+                    <span>📊 EMA34</span>
                     <span class="ema34-value" id="ema34-value">--</span>
                 </div>
-                
-                <div class="dxy-status neutral" id="dxy-status">
-                    <span>💵</span>
-                    <span class="dxy-value" id="dxy-value">--</span>
-                    <span id="dxy-direction" class="dxy-direction">⬌</span>
-                    <span class="dxy-change" id="dxy-change">--</span>
+                <div class="decision-panel">
+                    <div class="decision-text">
+                        <span class="decision-label">🎯 DECISION:</span>
+                        <span id="decision-status">🔍 ANALYZING...</span>
+                    </div>
+                    <div id="direction-arrow" class="direction-arrow">⬌</div>
                 </div>
             </div>
-            
-            <div class="decision-panel">
-                <div class="decision-text">
-                    <span class="decision-label">🎯 DECISION:</span>
-                    <span id="decision-status">🔍 ANALYZING...</span>
-                </div>
-                <div id="direction-arrow" class="direction-arrow">⬌</div>
-            </div>
-            
             <div id="live-price" onclick="smartCopy('live-price')">0.00</div>
             
             <div class="rsi-panel">
@@ -599,109 +529,12 @@
     const UI_UPDATE_INTERVAL = 100;
     const THROTTLE_MINUTES = 2;
     
-    // ==================== DXY TRACKER ====================
-    let dxyPrice = 104.50;
-    let dxyPrevPrice = 104.50;
-    let dxyChange = 0;
-    let dxyDirection = "neutral";
-    let dxyLastFetch = 0;
-    
-    function updateDXYFromPrice(price) {
-        if (currentPair === "XAUUSDT" && price > 0) {
-            const xauBaseline = 4500;
-            const xauDeviation = ((price - xauBaseline) / xauBaseline) * 100;
-            const estimatedDXY = 104.5 - (xauDeviation * 0.3);
-            
-            dxyPrevPrice = dxyPrice;
-            dxyPrice = Math.max(100, Math.min(110, estimatedDXY));
-            
-            if (dxyPrevPrice > 0) {
-                dxyChange = ((dxyPrice - dxyPrevPrice) / dxyPrevPrice) * 100;
-            } else {
-                dxyChange = 0;
-            }
-            
-            if (dxyChange > 0.03) dxyDirection = "up";
-            else if (dxyChange < -0.03) dxyDirection = "down";
-            else dxyDirection = "neutral";
-            
-            updateDXYDisplay();
-        } else if (currentPair === "BTCUSDT" && price > 0) {
-            const btcBaseline = 67000;
-            const btcDeviation = ((price - btcBaseline) / btcBaseline) * 100;
-            const estimatedDXY = 104.5 - (btcDeviation * 0.15);
-            
-            dxyPrevPrice = dxyPrice;
-            dxyPrice = Math.max(100, Math.min(110, estimatedDXY));
-            
-            if (dxyPrevPrice > 0) {
-                dxyChange = ((dxyPrice - dxyPrevPrice) / dxyPrevPrice) * 100;
-            } else {
-                dxyChange = 0;
-            }
-            
-            if (dxyChange > 0.03) dxyDirection = "up";
-            else if (dxyChange < -0.03) dxyDirection = "down";
-            else dxyDirection = "neutral";
-            
-            updateDXYDisplay();
-        }
-    }
-    
-    async function fetchDXY() {
-        const now = Date.now();
-        if (now - dxyLastFetch < 10000 && dxyPrice !== 0) return;
-        dxyLastFetch = now;
-        
-        if (lastPrice > 0) {
-            updateDXYFromPrice(lastPrice);
-        }
-    }
-    
-    function updateDXYDisplay() {
-        const dxyElem = document.getElementById('dxy-value');
-        const dxyDirectionElem = document.getElementById('dxy-direction');
-        const dxyChangeElem = document.getElementById('dxy-change');
-        const dxyStatusElem = document.getElementById('dxy-status');
-        
-        if (!dxyElem) return;
-        
-        dxyElem.innerText = dxyPrice.toFixed(2);
-        
-        let directionSymbol = "⬌";
-        let changeText = "";
-        let statusClass = "neutral";
-        
-        if (dxyDirection === "up") {
-            directionSymbol = "▲";
-            changeText = dxyChange > 0 ? `+${dxyChange.toFixed(2)}%` : `${dxyChange.toFixed(2)}%`;
-            statusClass = "bullish";
-        } else if (dxyDirection === "down") {
-            directionSymbol = "▼";
-            changeText = `${dxyChange.toFixed(2)}%`;
-            statusClass = "bearish";
-        } else {
-            changeText = "0.00%";
-        }
-        
-        dxyDirectionElem.innerHTML = directionSymbol;
-        if (dxyChangeElem) dxyChangeElem.innerText = changeText;
-        dxyStatusElem.className = `dxy-status ${statusClass}`;
-        
-        if (currentPair === "XAUUSDT") {
-            if (dxyDirection === "up") {
-                dxyStatusElem.title = "⚠️ DXY MENGUAT → XAUUSD cenderung TURUN";
-            } else if (dxyDirection === "down") {
-                dxyStatusElem.title = "✅ DXY MELEMAH → XAUUSD cenderung NAIK";
-            } else {
-                dxyStatusElem.title = "DXY Netral → Tidak ada bias kuat";
-            }
-        }
-    }
-    
-    // ==================== SIGNAL COOLDOWN SYSTEM ====================
+    // ==================== SIGNAL COOLDOWN SYSTEM (FIXED) ====================
     let lastSignalExpiry = 0;
     let lastSignalDecision = "";
+    let lastSignalTime = 0;
+    let isShowingSignal = false;
+    let signalTimer = null;
     
     // MTF Background Data
     let mtfBiasCache = { m5: "NEUTRAL", m15: "NEUTRAL", h1: "NEUTRAL" };
@@ -725,7 +558,7 @@
         throttleMap.set(key, Date.now());
     }
     
-    // ==================== ATR CALCULATION ====================
+    // ==================== ATR CALCULATION (OPTIMIZED) ====================
     let cachedATR = 0;
     let lastATRCalc = 0;
     
@@ -840,11 +673,12 @@
         }
     }
     
-    // ==================== DIRECTION ARROW ====================
+    // ==================== DIRECTION ARROW - REAL-TIME & SELARAS ====================
     function updateDirectionArrow(currentPrice) {
         const arrowElem = document.getElementById('direction-arrow');
         if (!arrowElem) return;
     
+        // Arrow tetap aktif meski ADX rendah, tapi dengan warna netral
         if (engine.adx < 15) {
             if (lastArrowDirection !== "neutral") {
                 arrowElem.innerHTML = "⬌";
@@ -902,7 +736,7 @@
             arrowElem.style.color = arrowColor;
             arrowElem.style.textShadow = direction !== "neutral" ? `0 0 6px ${arrowColor}` : "none";
             arrowElem.classList.add('arrow-pulse');
-            setTimeout(() => arrowElem.classList.remove('arrow-pulse'), 200);
+            setTimeout(() => arrowElem.classList.remove('arrow-pulse'), 300);
             lastArrowDirection = direction;
         }
     }
@@ -950,6 +784,7 @@
         if (heartbeatInterval) { clearInterval(heartbeatInterval); heartbeatInterval = null; }
         if (restFallbackInterval) { clearInterval(restFallbackInterval); restFallbackInterval = null; }
         if (reconnectTimer) { clearTimeout(reconnectTimer); reconnectTimer = null; }
+        if (signalTimer) { clearTimeout(signalTimer); signalTimer = null; }
     }
     
     function cleanupWebSocket() {
@@ -969,7 +804,7 @@
         setTimeout(() => { isManualDisconnect = false; }, 100);
     }
     
-    // ==================== REST FALLBACK ====================
+    // ==================== REST FALLBACK (FIXED) ====================
     async function fetchLatestPrice() {
         try {
             const url = `https://fapi.binance.com/fapi/v1/ticker/price?symbol=${currentPair}`;
@@ -978,9 +813,9 @@
             if (data && data.price) {
                 const newPrice = parseFloat(data.price);
                 if (newPrice !== lastPrice && !isNaN(newPrice) && newPrice > 0) {
+                    console.log(`📡 REST fallback: ${currentPair} = ${newPrice}`);
                     updateUI(newPrice);
                     lastWSMessageTime = Date.now();
-                    updateDXYFromPrice(newPrice);
                 }
                 return newPrice;
             }
@@ -993,72 +828,10 @@
     function startRestForceRefresh() {
         if (restFallbackInterval) clearInterval(restFallbackInterval);
         restFallbackInterval = setInterval(() => {
-            if (!isReloading) {
+            if (!isReloading && (!wsConnection || wsConnection.readyState !== WebSocket.OPEN || isUsingFallback)) {
                 fetchLatestPrice();
             }
         }, 5000);
-    }
-    
-    // ==================== ADX UI ====================
-    function updateADXUI(adxValue) {
-        const adxElem = document.getElementById('adx-status');
-        const adxValueElem = document.getElementById('adx-value');
-        const adxDirectionElem = document.getElementById('adx-direction');
-        if (!adxElem || !adxValueElem) return;
-        
-        adxValueElem.innerText = adxValue.toFixed(1);
-        
-        let statusClass = "";
-        let directionSymbol = "⬌";
-        let directionColor = "var(--silver-dark)";
-        
-        if (adxValue < 15) { 
-            statusClass = "ranging"; 
-            directionSymbol = "⬌";
-            directionColor = "var(--silver-dark)";
-        }
-        else if (adxValue < 25) { 
-            statusClass = "weak"; 
-            directionSymbol = "▲";
-            directionColor = "var(--gold)";
-        }
-        else { 
-            statusClass = "strong"; 
-            directionSymbol = "▲";
-            directionColor = "var(--accent)";
-        }
-        
-        adxElem.className = `adx-status ${statusClass}`;
-        adxDirectionElem.innerHTML = directionSymbol;
-        adxDirectionElem.style.color = directionColor;
-        engine.adx = adxValue;
-    }
-    
-    // ==================== EMA34 UI ====================
-    function updateEMA34UI(currentPrice) {
-        const emaValue = calculateEMA34();
-        const emaElem = document.getElementById('ema34-value');
-        const emaStatus = document.getElementById('ema34-status');
-        
-        if (!emaElem || !emaStatus) return;
-        
-        if (emaValue !== null && !isNaN(emaValue)) {
-            engine.ema34 = emaValue;
-            const prec = getPrecision();
-            emaElem.innerText = emaValue.toFixed(prec);
-            
-            if (currentPrice > emaValue) { 
-                emaStatus.className = "ema34-status bullish";
-                emaElem.style.color = "var(--accent)";
-            } else { 
-                emaStatus.className = "ema34-status bearish";
-                emaElem.style.color = "var(--danger)";
-            }
-        } else { 
-            emaElem.innerText = "--"; 
-            emaStatus.className = "ema34-status";
-            emaElem.style.color = "var(--orange)";
-        }
     }
     
     function checkAndUpdateStructure(currentPrice) {
@@ -1374,7 +1147,7 @@
         updateMTFPargraph();
     }
     
-    // ==================== FINAL DECISION DENGAN HIERARKI PER PAIR ====================
+    // ==================== FIXED: FINAL DECISION DENGAN SIGNAL HOLD ====================
     function updateFinalDecision() {
         const decisionElem = document.getElementById('decision-status');
         if (!decisionElem) return;
@@ -1382,8 +1155,10 @@
         const currentPrice = lastPrice;
         const now = Date.now();
         
+        // CEK APAKAH MASIH DALAM MASA COOLDOWN SINYAL TERAKHIR
         const isInCooldown = now < lastSignalExpiry;
         
+        // JIKA MASIH COOLDOWN, TAMPILKAN SINYAL TERAKHIR (BUKAN THROTTLE MESSAGE)
         if (isInCooldown && lastSignalDecision) {
             const remainingSeconds = Math.ceil((lastSignalExpiry - now) / 1000);
             const minutes = Math.floor(remainingSeconds / 60);
@@ -1407,7 +1182,8 @@
             decisionElem.classList.remove('signal-active');
         }
         
-        // ==================== AMBIL DATA ====================
+        // ==================== NORMAL ANALYSIS ====================
+        
         const isBullishBias = engine.bias === "BULLISH" || engine.bias === "BULLISH_BOS";
         const isBearishBias = engine.bias === "BEARISH" || engine.bias === "BEARISH_BOS";
         const isTrendStrong = engine.adx > 20;
@@ -1423,7 +1199,6 @@
         const fvgDepth = getFVGMitigationDepthAdvanced(engine.swingHigh, engine.swingLow, currentPrice, candleData);
         const isFVGReadyBool = isFVGReady(fvgDepth, isBullishBias || isBOSConfirmed, candleData);
         
-        // MTF Analysis
         const m5Bullish = mtfBiasCache.m5 === "BULLISH";
         const m15Bullish = mtfBiasCache.m15 === "BULLISH";
         const h1Bullish = mtfBiasCache.h1 === "BULLISH";
@@ -1436,7 +1211,6 @@
         
         const isMTFBullish = bullishCount >= 2;
         const isMTFBearish = bearishCount >= 2;
-        const isMTFStrong = bullishCount >= 3 || bearishCount >= 3;
         
         const isAboveEMA = currentPrice > engine.ema34;
         const isBelowEMA = currentPrice < engine.ema34;
@@ -1447,227 +1221,85 @@
         const hasSignificantMove = currentPair === "XAUUSDT" ? priceChange > 0.3 : priceChange > 30;
         lastDecisionPrice = currentPrice;
         
-        // ==================== PRIORITAS BERDASARKAN PAIR ====================
-        const isXAU = currentPair === "XAUUSDT";
-        const isBTC = currentPair === "BTCUSDT";
-        
         let decision = "";
         let decisionColor = "";
         let decisionBg = "";
         let shouldAnimate = false;
         let isSignalAllowed = false;
         
-        // ==================== XAUUSD PRIORITY (MTF STRONG > SWEEP/BOS > MTF > EMA+ADX > EMA) ====================
-        if (isXAU) {
-            // LEVEL 1: MTF STRONG (3/3) + Entry Zone → 88% win rate
-            if (!isSignalAllowed && isMTFStrong && isPriceInZone && (isTrendStrong || hasSignificantMove) && engine.adx > 20) {
-                if (isMTFBullish && !isBearishBias) {
-                    isSignalAllowed = true;
-                    decision = "✅ BUY NOW! 🔥 (MTF STRONG)";
-                    decisionColor = "var(--accent)";
-                    decisionBg = "rgba(0, 255, 170, 0.3)";
-                    shouldAnimate = true;
-                } else if (isMTFBearish && !isBullishBias) {
-                    isSignalAllowed = true;
-                    decision = "🔻 SELL NOW! 🔥 (MTF STRONG)";
-                    decisionColor = "var(--orange)";
-                    decisionBg = "rgba(255, 136, 77, 0.3)";
-                    shouldAnimate = true;
-                }
-            }
-            
-            // LEVEL 2: SWEEP/BOS + Entry Zone → 82% win rate
-            if (!isSignalAllowed && isPriceInZone && (isTrendStrong || hasSignificantMove) && engine.adx > 20) {
-                if ((isBullishBias && (isBOSConfirmed || isSweepActive)) && lastArrowDirection === "up") {
-                    isSignalAllowed = true;
-                    decision = "✅ BUY NOW! 🔥 (SWEEP/BOS)";
-                    decisionColor = "var(--accent)";
-                    decisionBg = "rgba(0, 255, 170, 0.25)";
-                    shouldAnimate = true;
-                } else if ((isBearishBias && (isBOSConfirmed || isSweepActive)) && lastArrowDirection === "down") {
-                    isSignalAllowed = true;
-                    decision = "🔻 SELL NOW! 🔥 (SWEEP/BOS)";
-                    decisionColor = "var(--orange)";
-                    decisionBg = "rgba(255, 136, 77, 0.25)";
-                    shouldAnimate = true;
-                }
-            }
-            
-            // LEVEL 3: MTF CONFLUENCE (2/3) + Entry Zone → 76% win rate
-            if (!isSignalAllowed && isPriceInZone && (isTrendStrong || hasSignificantMove) && engine.adx > 20) {
-                if (isMTFBullish && !isBearishBias) {
-                    isSignalAllowed = true;
-                    decision = "✅ BUY NOW! 🔥 (MTF)";
-                    decisionColor = "var(--accent)";
-                    decisionBg = "rgba(0, 255, 170, 0.2)";
-                    shouldAnimate = true;
-                } else if (isMTFBearish && !isBullishBias) {
-                    isSignalAllowed = true;
-                    decision = "🔻 SELL NOW! 🔥 (MTF)";
-                    decisionColor = "var(--orange)";
-                    decisionBg = "rgba(255, 136, 77, 0.2)";
-                    shouldAnimate = true;
-                }
-            }
-            
-            // LEVEL 4: EMA34 + ADX > 25 + Entry Zone → 76% win rate
-            if (!isSignalAllowed && isPriceInZone && (isTrendStrong || hasSignificantMove) && engine.adx > 25) {
-                if (isAboveEMA && !isBearishBias) {
-                    isSignalAllowed = true;
-                    decision = "✅ BUY NOW! 🔥 (EMA+ADX)";
-                    decisionColor = "var(--accent)";
-                    decisionBg = "rgba(0, 255, 170, 0.18)";
-                    shouldAnimate = true;
-                } else if (isBelowEMA && !isBullishBias) {
-                    isSignalAllowed = true;
-                    decision = "🔻 SELL NOW! 🔥 (EMA+ADX)";
-                    decisionColor = "var(--orange)";
-                    decisionBg = "rgba(255, 136, 77, 0.18)";
-                    shouldAnimate = true;
-                }
-            }
-            
-            // LEVEL 5: EMA34 + Entry Zone → 71% win rate
-            if (!isSignalAllowed && isPriceInZone && (isTrendStrong || hasSignificantMove) && engine.adx > 20) {
-                if (isAboveEMA && !isBearishBias) {
-                    isSignalAllowed = true;
-                    decision = "✅ BUY NOW! 🔥 (EMA)";
-                    decisionColor = "var(--accent)";
-                    decisionBg = "rgba(0, 255, 170, 0.15)";
-                    shouldAnimate = true;
-                } else if (isBelowEMA && !isBullishBias) {
-                    isSignalAllowed = true;
-                    decision = "🔻 SELL NOW! 🔥 (EMA)";
-                    decisionColor = "var(--orange)";
-                    decisionBg = "rgba(255, 136, 77, 0.15)";
-                    shouldAnimate = true;
-                }
-            }
+        // PRIORITAS 1: SWEEP/BOS (Paling Kuat)
+        if ((isTrendStrong || hasSignificantMove) && !isRanging && isPriceInZone && (isBullishBias && (isBOSConfirmed || isSweepActive)) && lastArrowDirection === "up") {
+            isSignalAllowed = true;
+            decision = "✅ BUY NOW! 🔥";
+            decisionColor = "var(--accent)";
+            decisionBg = "rgba(0, 255, 170, 0.25)";
+            shouldAnimate = true;
+        }
+        else if ((isTrendStrong || hasSignificantMove) && !isRanging && isPriceInZone && (isBearishBias && (isBOSConfirmed || isSweepActive)) && lastArrowDirection === "down") {
+            isSignalAllowed = true;
+            decision = "🔻 SELL NOW! 🔥";
+            decisionColor = "var(--orange)";
+            decisionBg = "rgba(255, 136, 77, 0.25)";
+            shouldAnimate = true;
+        }
+        // PRIORITAS 2: MTF CONFLUENCE
+        else if ((isTrendStrong || hasSignificantMove) && !isRanging && isPriceInZone && isMTFBullish && !isBearishBias) {
+            isSignalAllowed = true;
+            decision = "✅ BUY NOW! 🔥 (MTF)";
+            decisionColor = "var(--accent)";
+            decisionBg = "rgba(0, 255, 170, 0.2)";
+            shouldAnimate = true;
+        }
+        else if ((isTrendStrong || hasSignificantMove) && !isRanging && isPriceInZone && isMTFBearish && !isBullishBias) {
+            isSignalAllowed = true;
+            decision = "🔻 SELL NOW! 🔥 (MTF)";
+            decisionColor = "var(--orange)";
+            decisionBg = "rgba(255, 136, 77, 0.2)";
+            shouldAnimate = true;
+        }
+        // PRIORITAS 3: EMA34
+        else if ((isTrendStrong || hasSignificantMove) && !isRanging && isPriceInZone && isAboveEMA && !isBearishBias) {
+            isSignalAllowed = true;
+            decision = "✅ BUY NOW! 🔥 (EMA)";
+            decisionColor = "var(--accent)";
+            decisionBg = "rgba(0, 255, 170, 0.2)";
+            shouldAnimate = true;
+        }
+        else if ((isTrendStrong || hasSignificantMove) && !isRanging && isPriceInZone && isBelowEMA && !isBullishBias) {
+            isSignalAllowed = true;
+            decision = "🔻 SELL NOW! 🔥 (EMA)";
+            decisionColor = "var(--orange)";
+            decisionBg = "rgba(255, 136, 77, 0.2)";
+            shouldAnimate = true;
+        }
+        // KONDISI LAIN
+        else if (isSweepActive && !isBOSConfirmed) {
+            decision = "⏳ WAITING BOS...";
+            decisionColor = "var(--orange)";
+            decisionBg = "rgba(255, 136, 77, 0.1)";
+        }
+        else if (isBOSConfirmed && !isPriceInZone) {
+            decision = "⏳ WAITING ENTRY ZONE...";
+            decisionColor = "var(--gold)";
+            decisionBg = "rgba(255, 204, 0, 0.1)";
+        }
+        else if (isRanging && !hasSignificantMove) {
+            decision = "⏳ WAIT (LOW VOLATILITY)";
+            decisionColor = "var(--silver-dark)";
+            decisionBg = "rgba(170, 170, 170, 0.1)";
+        }
+        else if (isPriceInZone && (isTrendStrong || hasSignificantMove) && !isSweepActive && !isBOSConfirmed) {
+            decision = "⏳ WAITING SWEEP...";
+            decisionColor = "var(--orange)";
+            decisionBg = "rgba(255, 136, 77, 0.1)";
+        }
+        else {
+            decision = "⏸ NO SETUP";
+            decisionColor = "var(--silver-dark)";
+            decisionBg = "rgba(170, 170, 170, 0.05)";
         }
         
-        // ==================== BTCUSD PRIORITY (MTF STRONG > SWEEP/BOS > EMA+ADX > MTF > EMA) ====================
-        else if (isBTC) {
-            // LEVEL 1: MTF STRONG (3/3) + Entry Zone → 78% win rate
-            if (!isSignalAllowed && isMTFStrong && isPriceInZone && (isTrendStrong || hasSignificantMove) && engine.adx > 20) {
-                if (isMTFBullish && !isBearishBias) {
-                    isSignalAllowed = true;
-                    decision = "✅ BUY NOW! 🔥 (MTF STRONG)";
-                    decisionColor = "var(--accent)";
-                    decisionBg = "rgba(0, 255, 170, 0.3)";
-                    shouldAnimate = true;
-                } else if (isMTFBearish && !isBullishBias) {
-                    isSignalAllowed = true;
-                    decision = "🔻 SELL NOW! 🔥 (MTF STRONG)";
-                    decisionColor = "var(--orange)";
-                    decisionBg = "rgba(255, 136, 77, 0.3)";
-                    shouldAnimate = true;
-                }
-            }
-            
-            // LEVEL 2: SWEEP/BOS + Entry Zone → 74% win rate
-            if (!isSignalAllowed && isPriceInZone && (isTrendStrong || hasSignificantMove) && engine.adx > 20) {
-                if ((isBullishBias && (isBOSConfirmed || isSweepActive)) && lastArrowDirection === "up") {
-                    isSignalAllowed = true;
-                    decision = "✅ BUY NOW! 🔥 (SWEEP/BOS)";
-                    decisionColor = "var(--accent)";
-                    decisionBg = "rgba(0, 255, 170, 0.25)";
-                    shouldAnimate = true;
-                } else if ((isBearishBias && (isBOSConfirmed || isSweepActive)) && lastArrowDirection === "down") {
-                    isSignalAllowed = true;
-                    decision = "🔻 SELL NOW! 🔥 (SWEEP/BOS)";
-                    decisionColor = "var(--orange)";
-                    decisionBg = "rgba(255, 136, 77, 0.25)";
-                    shouldAnimate = true;
-                }
-            }
-            
-            // LEVEL 3: EMA34 + ADX > 25 + Entry Zone → 71% win rate
-            if (!isSignalAllowed && isPriceInZone && (isTrendStrong || hasSignificantMove) && engine.adx > 25) {
-                if (isAboveEMA && !isBearishBias) {
-                    isSignalAllowed = true;
-                    decision = "✅ BUY NOW! 🔥 (EMA+ADX)";
-                    decisionColor = "var(--accent)";
-                    decisionBg = "rgba(0, 255, 170, 0.2)";
-                    shouldAnimate = true;
-                } else if (isBelowEMA && !isBullishBias) {
-                    isSignalAllowed = true;
-                    decision = "🔻 SELL NOW! 🔥 (EMA+ADX)";
-                    decisionColor = "var(--orange)";
-                    decisionBg = "rgba(255, 136, 77, 0.2)";
-                    shouldAnimate = true;
-                }
-            }
-            
-            // LEVEL 4: MTF CONFLUENCE (2/3) + Entry Zone → 68% win rate
-            if (!isSignalAllowed && isPriceInZone && (isTrendStrong || hasSignificantMove) && engine.adx > 20) {
-                if (isMTFBullish && !isBearishBias) {
-                    isSignalAllowed = true;
-                    decision = "✅ BUY NOW! 🔥 (MTF)";
-                    decisionColor = "var(--accent)";
-                    decisionBg = "rgba(0, 255, 170, 0.18)";
-                    shouldAnimate = true;
-                } else if (isMTFBearish && !isBullishBias) {
-                    isSignalAllowed = true;
-                    decision = "🔻 SELL NOW! 🔥 (MTF)";
-                    decisionColor = "var(--orange)";
-                    decisionBg = "rgba(255, 136, 77, 0.18)";
-                    shouldAnimate = true;
-                }
-            }
-            
-            // LEVEL 5: EMA34 + Entry Zone → 65% win rate
-            if (!isSignalAllowed && isPriceInZone && (isTrendStrong || hasSignificantMove) && engine.adx > 20) {
-                if (isAboveEMA && !isBearishBias) {
-                    isSignalAllowed = true;
-                    decision = "✅ BUY NOW! 🔥 (EMA)";
-                    decisionColor = "var(--accent)";
-                    decisionBg = "rgba(0, 255, 170, 0.15)";
-                    shouldAnimate = true;
-                } else if (isBelowEMA && !isBullishBias) {
-                    isSignalAllowed = true;
-                    decision = "🔻 SELL NOW! 🔥 (EMA)";
-                    decisionColor = "var(--orange)";
-                    decisionBg = "rgba(255, 136, 77, 0.15)";
-                    shouldAnimate = true;
-                }
-            }
-        }
-        
-        // ==================== KONDISI TANPA SINYAL ====================
-        if (!isSignalAllowed) {
-            if (isSweepActive && !isBOSConfirmed) {
-                decision = "⏳ WAITING BOS...";
-                decisionColor = "var(--orange)";
-                decisionBg = "rgba(255, 136, 77, 0.1)";
-            }
-            else if (isBOSConfirmed && !isPriceInZone) {
-                decision = "⏳ WAITING ENTRY ZONE...";
-                decisionColor = "var(--gold)";
-                decisionBg = "rgba(255, 204, 0, 0.1)";
-            }
-            else if (isRanging && !hasSignificantMove) {
-                decision = "⏳ WAIT (LOW VOLATILITY)";
-                decisionColor = "var(--silver-dark)";
-                decisionBg = "rgba(170, 170, 170, 0.1)";
-            }
-            else if (isPriceInZone && (isTrendStrong || hasSignificantMove) && !isSweepActive && !isBOSConfirmed) {
-                decision = "⏳ WAITING SWEEP...";
-                decisionColor = "var(--orange)";
-                decisionBg = "rgba(255, 136, 77, 0.1)";
-            }
-            else if (engine.adx < 20) {
-                decision = "⏳ WAIT (WEAK TREND)";
-                decisionColor = "var(--gold)";
-                decisionBg = "rgba(255, 204, 0, 0.1)";
-            }
-            else {
-                decision = "⏸ NO SETUP";
-                decisionColor = "var(--silver-dark)";
-                decisionBg = "rgba(170, 170, 170, 0.05)";
-            }
-        }
-        
-        // ==================== FVG VALIDATION ====================
+        // FVG VALIDATION
         if (isSignalAllowed) {
             if (!isFVGReadyBool) {
                 const fvgNeeded = 30;
@@ -1679,7 +1311,10 @@
                 shouldAnimate = false;
             }
             else if (throttleCheck.throttled) {
+                // JANGAN LANGSUNG TIMPA SINYAL - TAPI SINYAL TETAP BISA MUNCUL
+                // Throttle hanya mencegah sinyal baru, bukan menghapus sinyal lama
                 if (!lastSignalDecision) {
+                    // Jika tidak ada sinyal yang sedang ditampilkan, tampilkan throttle
                     const minutes = Math.ceil(throttleCheck.remaining / 60);
                     decision = `⏳ THROTTLED (${minutes}m)`;
                     decisionColor = "var(--orange)";
@@ -1692,11 +1327,14 @@
             }
         }
         
-        // ==================== AKTIFKAN COOLDOWN ====================
+        // JIKA SINYAL VALID, AKTIFKAN COOLDOWN DAN SIMPAN SINYAL
         if (isSignalAllowed) {
+            // Aktifkan cooldown 2 menit
             lastSignalExpiry = now + (THROTTLE_MINUTES * 60 * 1000);
             lastSignalDecision = decision;
+            lastSignalTime = now;
             
+            // Tampilkan sinyal dengan animasi
             decisionElem.innerHTML = decision;
             decisionElem.style.color = decisionColor;
             decisionElem.style.background = decisionBg;
@@ -1705,15 +1343,17 @@
                 decisionElem.classList.add('decision-animate');
                 setTimeout(() => {
                     if (decisionElem) decisionElem.classList.remove('decision-animate');
-                }, 600);
+                }, 800);
             }
             
+            // Update throttle map untuk mencegah sinyal baru dari pair/timeframe yang sama
             updateThrottle(currentPair, currentTF);
+            
             lastDecision = decision;
             return;
         }
         
-        // ==================== TAMPILKAN DECISION NON-SINYAL ====================
+        // TAMPILKAN DECISION NON-SINYAL (tanpa cooldown)
         if (lastDecision !== decision) {
             shouldAnimate = true;
             lastDecision = decision;
@@ -1729,6 +1369,37 @@
                 if (decisionElem) decisionElem.classList.remove('decision-animate');
             }, 600);
         }
+    }
+    
+    function updateADXUI(adxValue) {
+        const adxElem = document.getElementById('adx-status');
+        const adxValueElem = document.getElementById('adx-value');
+        const adxBar = document.getElementById('adx-bar');
+        if (!adxElem || !adxValueElem || !adxBar) return;
+        adxValueElem.innerText = adxValue.toFixed(1);
+        const barWidth = Math.min(100, (adxValue / 60) * 100);
+        adxBar.style.width = barWidth + "%";
+        let statusClass = "", barColor = "";
+        if (adxValue < 15) { statusClass = "ranging"; barColor = "var(--silver-dark)"; }
+        else if (adxValue < 20) { statusClass = "weak"; barColor = "var(--gold)"; }
+        else { statusClass = "strong"; barColor = "var(--accent)"; }
+        adxElem.className = `adx-status ${statusClass}`;
+        adxBar.style.background = barColor;
+        engine.adx = adxValue;
+    }
+    
+    function updateEMA34UI(currentPrice) {
+        const emaValue = calculateEMA34();
+        const emaElem = document.getElementById('ema34-value');
+        const emaStatus = document.getElementById('ema34-status');
+        if (!emaElem || !emaStatus) return;
+        if (emaValue !== null && !isNaN(emaValue)) {
+            engine.ema34 = emaValue;
+            const prec = getPrecision();
+            emaElem.innerText = emaValue.toFixed(prec);
+            if (currentPrice > emaValue) { emaStatus.className = "ema34-status bullish"; emaElem.style.color = "var(--accent)"; }
+            else { emaStatus.className = "ema34-status bearish"; emaElem.style.color = "var(--danger)"; }
+        } else { emaElem.innerText = "--"; emaStatus.className = "ema34-status"; }
     }
     
     function updateSwingUI() {
@@ -1793,14 +1464,15 @@
         
         const isBullish = engine.bosConfirmed ? engine.bias === "BULLISH_BOS" : engine.bias === "BULLISH";
         
+        // Hitung entry zone dan TP (TP tetap 21% seperti permintaan)
         if (isBullish) {
             engine.f618 = swingLow + (range * 0.618);
             engine.deep = swingLow + (range * 0.79);
-            engine.tp = swingHigh + (range * 0.21);
+            engine.tp = swingHigh + (range * 0.21);  // TP 21%
         } else {
             engine.f618 = swingHigh - (range * 0.618);
             engine.deep = swingHigh - (range * 0.79);
-            engine.tp = swingLow - (range * 0.21);
+            engine.tp = swingLow - (range * 0.21);  // TP 21%
         }
         
         updateSwingUI(); 
@@ -1868,6 +1540,7 @@
         const now = Date.now();
         lastWSMessageTime = now;
         
+        // Update harga selalu realtime
         const prec = getPrecision();
         const priceElem = document.getElementById('live-price');
         if (priceElem) {
@@ -1876,11 +1549,13 @@
             priceElem.innerHTML = `${parts[0]}<span class="price-decimal">.${parts[1] || "00"}</span>`;
             if (currentPrice > lastPrice && lastPrice !== 0) priceElem.style.color = "var(--accent)";
             else if (currentPrice < lastPrice && lastPrice !== 0) priceElem.style.color = "var(--danger)";
-            setTimeout(() => priceElem.style.color = "#fff", 80);
+            setTimeout(() => priceElem.style.color = "#fff", 100);
         }
         
+        // Update direction arrow realtime
         updateDirectionArrow(currentPrice);
         
+        // Update elemen lain dengan throttle (100ms)
         if (now - lastUIElementsUpdate >= UI_UPDATE_INTERVAL) {
             updateUIElements(currentPrice);
             updateFinalDecision();
@@ -1931,7 +1606,6 @@
                     detectLiquiditySweep(tradePrice); 
                     confirmBOS(tradePrice); 
                     updateUI(tradePrice);
-                    updateDXYFromPrice(tradePrice);
                 }
             } catch (err) { console.warn("WS message error:", err); }
         };
@@ -1962,7 +1636,6 @@
             if (lastPrice > 0 && !isReloading && candleData.length > 0) { 
                 calculateSMCLevels(); 
                 updateUI(lastPrice); 
-                updateDXYFromPrice(lastPrice);
             } 
         }, 500); 
     }
@@ -2066,6 +1739,7 @@
         engine.fvgEntryActive = false;
         recentPrices = [];
         
+        // Reset cooldown saat reload
         lastSignalExpiry = 0;
         lastSignalDecision = "";
         
@@ -2081,6 +1755,7 @@
         startHeartbeat();
         startRestForceRefresh();
         
+        // MTF background refresh setiap 60 detik
         setInterval(fetchMTFData, 60000);
         
         document.querySelectorAll('.btn-tab').forEach(btn => btn.classList.remove('active'));
@@ -2089,10 +1764,11 @@
         if (pairBtn) pairBtn.classList.add('active');
         if (tfBtn) tfBtn.classList.add('active');
         
-        // Langsung hilangkan efek syncing tanpa delay
-        document.getElementById('main-terminal')?.classList.remove('syncing');
-        disableButtons(false);
-        isReloading = false;
+        setTimeout(() => {
+            document.getElementById('main-terminal')?.classList.remove('syncing');
+            disableButtons(false);
+            isReloading = false;
+        }, 500);
     }
     
     document.querySelectorAll('[data-pair]').forEach(btn => { 
